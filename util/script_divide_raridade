@@ -2,6 +2,22 @@ import shutil
 import csv
 import os
 
+super_raros = ['spotted_dolphin',
+'sei_whale',
+'short_finned_pilot_whale',
+'common_dolphin',
+'cuviers_beaked_whale',
+'pilot_whale',
+'long_finned_pilot_whale',
+'white_sided_dolphin',
+'brydes_whale',
+'pantropic_spotted_dolphin',
+'globis',
+'commersons_dolphin',
+'pygmy_killer_whale',
+'rough_toothed_dolphin',
+'frasiers_dolphin']
+
 with open('D:/base gigante/super_raros/super_raros.csv', 'w', newline='') as csvfile:
     fieldnames = ['image', 'species', 'individual_id']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
