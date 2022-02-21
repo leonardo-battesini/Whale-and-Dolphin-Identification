@@ -2,6 +2,7 @@ import shutil
 import csv
 import os
 import logging
+import pandas as pd
 
 class DivideGrupoDeBaleias:
     def filtragemBaleinhas (listaEspecies, df, groupName):
@@ -40,8 +41,6 @@ class DivideGrupoDeBaleias:
         logging.info('Finished filtragemBaleinhas')
 
     def modeloChamada():
-        
-        import pandas as pd
 
         super_raros = ['spotted_dolphin',
         'sei_whale',
