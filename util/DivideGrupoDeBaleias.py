@@ -7,6 +7,10 @@ import pandas as pd
 class DivideGrupoDeBaleias:
     def filtragemBaleinhas (listaEspecies, df, groupName):
 
+        """
+        recebe uma lista de espécies, o dataframe e o nome desse grupo, então, move as fotos para um novo diretório em Outputs e gera o csv com a especificação de cada foto.
+        """
+
         logging.info('Started filtragemBaleinhas')
 
         root_dir = os.path.abspath(os.curdir)
