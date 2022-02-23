@@ -11,3 +11,13 @@ In this competition, you’ll develop a model to match individual whales and dol
 If successful, you'll have a hand in building advanced technology to better understand and manage the impact on the world’s changing oceans. Previous automation attempts resulted in a global database of over 50,000 whales and an agreement with cruise ships to operate at a maximum speed of 11 mph in the most whale-rich region. Your ideas to automate the identification of marine life will help overcome increasing human impacts on oceans, providing a critical tool for conservation science. If there's a whale, there's a way!
 
 https://www.kaggle.com/c/happy-whale-and-dolphin
+
+############################################################################################################
+
+To build project you need to have docker and docker-compose installed.
+
+- To run project container in tensorflow cpu: 
+    $ docker-compose --profile CPU up
+
+- To run project container in tensorflow gpu:
+    $ docker-compose --profile GPU up

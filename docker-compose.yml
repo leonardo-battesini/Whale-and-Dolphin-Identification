@@ -1,15 +1,17 @@
 services:
-   kagge-happy-whale-dev:
+   kagge-happy-whale-gpu:
      build: 
         context: .
-        dockerfile: Dockerfile
+        dockerfile: ./dockerfiles/Dockerfile-GPU
 
-     image: tensorflow
+     image: tensorflow-gpu
 
      container_name: tensorflow-gpu     
  
      volumes:
-      - .:/usr/src/app  
+      - .:/usr/src/app
+
+     profiles: ["GPU"]  
      
      ports:
       - 8888:8888
@@ -22,6 +24,24 @@ services:
               capabilities: [ gpu ]
               # To specify certain GPU uncomment line below
               #device_ids: ['0,3']
+     volumes:
+       - .:/usr/src/app
 
-     # mantém o container aberto, se o mesmo não executa um script
      tty: true
+            
+   kagge-happy-whale-cpu: 
+      build:     
+        context: .
+        dockerfile: ./dockerfiles/Dockerfile-CPU
+
+      profiles: ["CPU"] 
+
+      image: tensorflow-cpu
+ 
+      container_name: tensorflow-cpu     
+  
+      volumes:
+       - .:/usr/src/app
+ 
+      # mantém o container aberto, se o mesmo não executa um script
+      tty: true
