@@ -29,15 +29,22 @@ from sklearn.metrics import roc_curve, auc, accuracy_score
 root_dir = os.path.abspath(os.curdir)
 image_dir = root_dir +'\\outputs'
 
-def get_image(id_image, dir_name):
+def get_image_and_resize(id_image, dir_name, resize = False, size = 0):
     """
-    Recebe o nome do arquivo .JPG e o nome do diretório em que está e retorna a imagem como np.array. 
+    Recebe o nome do arquivo .JPG e o nome do diretório em que está e retorna a imagem como np.array. Entrar com resize = True e size = tamanho máximo em px pra uma imagem se quiser fazer um resize.
     """
     dir = image_dir + '\\' + dir_name
     filename = "{}.jpg".format(id_image)
     file_path = os.path.join(dir, filename)
-    img = Image.open(file_path)
-    return np.array(img)
+    
+    if(resize == False):
+        img = Image.open(file_path)
+        return np.array(img)
+    else:
+        MAX_SIZE = (size, size)
+        img = Image.open(file_path)
+        img.thumbnail(MAX_SIZE)
+        return np.array(img)
 
 #show the corresponding image of a Bombus
 #plt.imshow(get_image('00db5ec9e46a3d', 'super_raros'))
@@ -57,24 +64,31 @@ def turn_grey(img):
 
 ############### pra cima tá ok
 
-def turn_hog(image):
+def turn_hog(img):
 
-    MAX_SIZE = (100, 100) 
-    #img = Image.new(image) #imagem não está ficando pequena
-    img.thumbnail(MAX_SIZE)
-
-    # run HOG using our greyscale bombus image
+    # run HOG using greyscale images
     hog_features, hog_image = hog(img,
                                 visualize=True,
                                 block_norm='L2-Hys',
                                 pixels_per_cell=(16, 16))
+    return hog_image
 
-    # show our hog_image with a grey colormap
-    plt.imshow(hog_image, cmap=mpl.cm.gray)
-    plt.show()
+def create_features(img):
+    """
+    All the information for a given image will be returned in a single row.
+    """
+    # flatten three channel color image
+    color_features = img.flatten()
+    # convert image to greyscale
+    grey_image = rgb2grey(img)
+    # get HOG features from greyscale image
+    hog_features = hog(grey_image, block_norm='L2-Hys', pixels_per_cell=(16, 16))
+    # combine color and hog features into a single array
+    flat_features = np.hstack([color_features, hog_features])
+    return flat_features
 
-#photo = get_image('00db5ec9e46a3d', 'super_raros')
+#photo = get_image_and_resize('00db5ec9e46a3d', 'super_raros', True, 300)
 #photo = turn_grey(photo)
-#print(type(photo))
-#turn_hog(photo)
+#photo = turn_hog(photo)
+#plt.imshow(photo, cmap=mpl.cm.gray)
 #plt.show()
