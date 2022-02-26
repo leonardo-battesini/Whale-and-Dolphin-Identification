@@ -7,7 +7,7 @@ class CriaTagTipo:
     def CriaTagTipo():
 
         """
-        recebe CSV e identifica golfinho ou baleia.
+        Lê o CSV 'train.csv', identifica golfinho ou baleia e gera 'train_with_tags.csv' em Outputs.
         """
 
         logging.info('Started CriaTagTipo')
@@ -28,17 +28,26 @@ class CriaTagTipo:
             writer.writeheader()
 
             for i in range(len(df.index)):
-                if "whale" in df.loc[i][1] or "beluga" in df.loc[i][1] or "globis" in df.loc[i][1]:
-                    type = "whale"
-                elif "dolphin" in df.loc[i][1] or "dolpin" in df.loc[i][1]:
-                    type = "dolphin"
-                else:
-                    type = "ERROR"
-                    logging.warning('Type ' + df.loc[i][1] + 'not found!')
+                type = IdentificaTipo(df.loc[i][1])
                 writer.writerow({'image': df.loc[i][0], 'species': df.loc[i][1], 'type': type, 'individual_id': df.loc[i][2]})
 
         csvfile.close()
 
         logging.info('Finished CriaTagTipo')
 
-CriaTagTipo.CriaTagTipo()
+def IdentificaTipo(nome):
+
+    """
+    Lê o nome da espécie e devolve o tipo.
+    """
+
+    if "whale" in nome or "beluga" in nome or "globis" in nome:
+        type = "whale"
+    elif "dolphin" in nome or "dolpin" in nome:
+        type = "dolphin"
+    else:
+        type = "ERROR"
+        logging.warning('Type of' + nome + ' not found!')
+    return type
+
+#CriaTagTipo.CriaTagTipo()
