@@ -36,7 +36,6 @@ class CriaTagTipo:
         logging.info('Finished CriaTagTipo')
 
 def IdentificaTipo(nome):
-
     """
     Lê o nome da espécie e devolve o tipo.
     """
@@ -50,4 +49,4 @@ def IdentificaTipo(nome):
         logging.warning('Type of' + nome + ' not found!')
     return type
 
-#CriaTagTipo.CriaTagTipo()
+CriaTagTipo.CriaTagTipo()
