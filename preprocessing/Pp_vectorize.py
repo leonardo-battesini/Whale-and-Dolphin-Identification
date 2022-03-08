@@ -36,29 +36,26 @@ class Pp_vectorize:
         """
         root_dir = os.path.abspath(os.curdir)
         image_dir = root_dir + '\\train_images'
-        #output_dir = root_dir + '\\outputs\\' + name_specie + '_pp'
+        output_dir = root_dir + '\\outputs\\embeddings' # + name_specie + '_pp'
 
         if not os.path.os.path.exists(image_dir):
             logging.warning(image_dir + ' not found! Please verify.')
             return 0
 
-        #if not os.path.os.path.exists(output_dir):
-        #    os.makedirs(output_dir)
-        #    logging.info(output_dir + ' folder created!')
+        if not os.path.os.path.exists(output_dir):
+            os.makedirs(output_dir)
+            logging.info(output_dir + ' folder created!')
 
+        #TODO se o train_with_tags.csv não existir, chama o método que gera
         df = pd.read_csv(root_dir + '\\outputs\\train_with_tags.csv')
+        
+        return Pp_vectorize.generate_and_save_feature(df, image_dir, output_dir, True, 500)
 
-        feature_matrix = Pp_vectorize.create_feature_matrix(df, image_dir, True, 500)
-    
-        df['feature_matrix'] = feature_matrix
-                
-        return df
-
-    def get_image_and_resize(id_image, dir, resize = False, size = 0):
+    def get_image_and_resize(image_file_name, dir, resize = False, size = 0):
         """
         Recebe o nome do arquivo .JPG e o nome do diretório em que está e retorna a imagem como np.array. Entrar com resize = True e size = tamanho máximo em px pra uma imagem se quiser fazer um resize.
         """
-        file_path = os.path.join(dir, id_image)
+        file_path = os.path.join(dir, image_file_name)
         
         if(resize == False):
             img = Image.open(file_path)
@@ -75,6 +72,7 @@ class Pp_vectorize:
         """
         # flatten three channel color image
         color_features = img.flatten()
+
         # convert image to greyscale
         if img.ndim > 2:
             grey_image = rgb2gray(img)
@@ -102,5 +100,22 @@ class Pp_vectorize:
         # convert list of arrays into a matrix
         feature_matrix = np.array(features_list)
         return feature_matrix
+
+    def generate_and_save_feature(labeled_dataframe, image_dir, output_dir, resize = False, size = 0):
+        cont = 0
+
+        for i in range(len(labeled_dataframe.index)):
+            img_file_name = labeled_dataframe.loc[i][0]
+            # load image
+            img = Pp_vectorize.get_image_and_resize(img_file_name, image_dir, resize, size)
+
+            # get features for image
+            print('create_feature_matrix(): ' + str(i+1) + '/' + str(len(labeled_dataframe.index)))
+            image_features = Pp_vectorize.create_features(img)
+            # save
+            file_name_output = output_dir + '\\' + img_file_name[:-4]
+            np.savetxt(file_name_output, image_features, delimiter=',')
+            cont += 1
+        return cont
 
 print(Pp_vectorize.pp_vectorize())
