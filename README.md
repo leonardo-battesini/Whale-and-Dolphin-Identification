@@ -6,6 +6,8 @@ At the link below, download all the files and extract them at the root of the pr
 
 To build project you need to have docker and docker-compose installed.
 
-To run project container in tensorflow cpu: $ docker-compose --profile CPU up
+- To run project container in tensorflow cpu: 
+    $ docker-compose --profile CPU up
 
-To run project container in tensorflow gpu: $ docker-compose --profile GPU up
+- To run project container in tensorflow gpu:
+    $ docker-compose --profile GPU up

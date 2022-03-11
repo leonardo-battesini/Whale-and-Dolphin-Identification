@@ -22,7 +22,7 @@ class CriaTagTipo:
             OUTPUT_FILE = '/train_with_tags.csv'
 
         """
-        recebe CSV e gera outro especificando a flg: golfinhos ou baleias.
+        Lê o CSV 'train.csv', identifica golfinho ou baleia e gera 'train_with_tags.csv' em Outputs.
         """
 
         logging.info('Started CriaTagTipo')
@@ -65,5 +65,4 @@ def IdentificaTipo(nome):
         type = "ERROR"
         logging.warning('Type of' + nome + ' not found!')
     return type
-
 

@@ -3,6 +3,7 @@ import csv
 import os
 import logging
 import pandas as pd
+import CriaTagTipo
 
 class DivideGrupoDeBaleias:
     def filtragemBaleinhas (listaEspecies, df, groupName):
@@ -22,7 +23,7 @@ class DivideGrupoDeBaleias:
             logging.info(groupName + ' folder created!')
 
         with open(csv_dir, 'w', newline='') as csvfile:
-            fieldnames = ['image', 'species', 'individual_id']
+            fieldnames = ['image', 'species', 'type', 'individual_id']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
 
@@ -38,7 +39,9 @@ class DivideGrupoDeBaleias:
                     else:
                         logging.warning('File not found in train_images: ' + df.loc[i][0])
                     
-                    writer.writerow({'image': df.loc[i][0], 'species': df.loc[i][1], 'individual_id': df.loc[i][2]})
+                    type = CriaTagTipo.IdentificaTipo(df.loc[i][1])
+
+                    writer.writerow({'image': df.loc[i][0], 'species': df.loc[i][1], 'type': type, 'individual_id': df.loc[i][2]})
 
         csvfile.close()
 
