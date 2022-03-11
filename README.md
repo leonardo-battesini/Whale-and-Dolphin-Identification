@@ -1,7 +1,6 @@
 # Whale-and-Dolphin-Identification
 
-At the link below, download all the files and extract them at the root of the project. There'll be two image folders and two CSV files.
-https://www.kaggle.com/c/happy-whale-and-dolphin/data
+At the link below, download all the files and extract them at the root of the project. There'll be two image folders and two CSV files. https://www.kaggle.com/c/happy-whale-and-dolphin/data
 
 #######################################################################################################
 
